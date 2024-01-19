@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { FileManagerComponent } from './file-manager/file-manager.component';
 const routes: Routes = [
     {
-    path: 'FileList', component: FileManagerComponent
-  }
+    path: '', component: FileManagerComponent,
+     },{path: 'FileList', component: FileManagerComponent}
 ];
 
 @NgModule({
