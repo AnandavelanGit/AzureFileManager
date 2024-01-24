@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://localhost:5001/'
-    //   apiUrl: 'https://filemanageapi.azurewebsites.net/'
+    //apiUrl: 'https://localhost:5001/'
+    apiUrl: 'https://filemanageapi.azurewebsites.net/'
 
 };
 
