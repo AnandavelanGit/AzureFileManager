@@ -1,0 +1,31 @@
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <!-- <label for="formFile" class="form-label">Upload File to Azure Container</label> -->
+                <input (change)="this.onFilechange($event)" class="form-control file-input" type="file" id="formFile" #fileUpload>
+                <!-- <button (click)="this.upload()" type="button" class="btn btn-primary mt-3">Upload</button> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="file-upload">
+
+        {{ file.name || "No file uploaded yet."}}
+     
+         <button mat-mini-fab color="primary" class="upload-btn"
+           (click)="fileUpload.click()">
+             <mat-icon>attach_file</mat-icon>
+         </button>
+     </div>
+
+     <div class="row mt-5"></div>
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <a [routerLink]="['/FileList']">Get Files Page</a>
+        </div>
+    </div>
+
+
+</div>

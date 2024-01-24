@@ -19,7 +19,7 @@ export class FileManagerComponent {
   filelisttemp:any []= [];
   //FileList: any[]=[];
  
-   displayedColumns: string[] = ['filename', 'size(KB)','uploadedby', 'uploadedDate'];
+   displayedColumns: string[] = ['filename', 'size(KB)', 'uploadedDate'];
 
    ngOnInit(): void {
 
