@@ -16,10 +16,13 @@ export class FileUploadComponent {
   //file: File = new File() ;
    file : any;
    filename : string = "";
+   containerList:any [] =[];
+ 
+ selectedContainer:string="";
 
   constructor(private Service: FilemanagerserviceService)
   {
-     
+    this.GetContainerList();
   }
 
   onFilechange(event: any) {
@@ -27,11 +30,25 @@ export class FileUploadComponent {
     this.file = event.target.files[0]
     this.upload();
   }
+
+  GetContainerList(): void {
+    this.Service.GetContainers().subscribe({
+     next: (response: any) => {        
+     this.containerList = response;    //this.FileList.push()       
+   },    
+   error: (e)=>{console.log("error " + e);},     
+   complete: () => {
+     console.log("inside complete");      
+     console.log(this.containerList);
+    }});
+  }
   
   upload() {
+    console.log("inside upload");
+    console.log(this.selectedContainer);
     if (this.file) {
       this.filename = this.file.name;
-      this.Service.UploadFile(this.file).subscribe(resp => {
+      this.Service.UploadFile(this.file, this.selectedContainer).subscribe(resp => {
         alert("Uploaded")
       })
     } else {

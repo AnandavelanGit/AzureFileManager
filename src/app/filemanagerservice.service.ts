@@ -20,6 +20,14 @@ export class FilemanagerserviceService {
     return this.http.get<any>(this.apiUrl + 'GetFiles');
   }
 
+  GetFileListForContainer(container:string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl + 'GetFiles' + '/' + container}` );
+  }
+
+  GetContainers(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'GetContainers');
+  }
+
   DownloadFile(blobName:string): Observable<any> {
    // return this.http.get<any>(this.apiUrl + 'DownloadBlob' + '/' + blobName, { responseType: 'blob'});
 //https://stackoverflow.com/questions/52848018/download-xls-file-using-angular-unexpected-token-p-in-json-at-position-0-at-js
@@ -27,9 +35,11 @@ export class FilemanagerserviceService {
 
   }
 
-  UploadFile(file:File): Observable<any> {
+  UploadFile(file:File, container:string): Observable<any> {
     let formParams = new FormData();
-    formParams.append('file', file)
+    formParams.append('file', file);
+    formParams.append('container', container);
+
      return this.http.post(`${this.apiUrl + 'UploadAFile'}`, formParams ); 
    }
   

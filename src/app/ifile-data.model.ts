@@ -1,10 +1,9 @@
 export interface IFileData {
 
     name: string;
-    uploadeddate:Date
-  uploadedby: string;
-  size: number;
- // uploadeddate: Date;
+    size: number;
+    uploadedDate:Date;
+ 
 }
 export class FileDataToDisplay {
 

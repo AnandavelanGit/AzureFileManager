@@ -1,44 +1,63 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Timestamp } from 'rxjs';
 import { FileDataToDisplay, IFileData } from '../ifile-data.model';
 import { FilemanagerserviceService } from '../filemanagerservice.service';
 import { Observable, of, pipe} from 'rxjs';
 import { map, filter, tap } from 'rxjs/operators'
+import { MatPaginator} from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, Sort } from '@angular/material/sort';
+
+// const   dataList : IFileData[] =  [
+//   {name: 'test', size: 30,  uploadedDate: new Date('2024/01/04')},
+//   {name: 'abc', size: 10,  uploadedDate: new Date('2024/03/04')},
+//   {name: 'game', size: 45,  uploadedDate: new Date('2024/02/04')},
+// ];
 
 
 @Component({
   selector: 'app-file-manager',
   templateUrl: './file-manager.component.html',
-  styleUrls: ['./file-manager.component.css']
+  styleUrls: ['./file-manager.component.css'],
+  // standalone: true,
+  // imports: [MatTableModule, MatSortModule,MatPaginatorModule],
 })
 
-export class FileManagerComponent {
-
-  //FileList: IFileData[]=[];
-
-  filelisttemp:any []= [];
-  //FileList: any[]=[];
+export class FileManagerComponent implements AfterViewInit {
+ // filelisttemp:any []= [];
+ containerList:any [] =[];
  
-   displayedColumns: string[] = ['filename', 'size(KB)', 'uploadedDate'];
+ selectedContainer:string="";
+  displayedColumns: string[] = ['name', 'size', 'uploadedDate'];
+  @ViewChild(MatPaginator)  paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  dataSource = new MatTableDataSource<IFileData>();
+  // dataSource = new MatTableDataSource<IFileData>(dataList);
+
+  constructor(private Service: FilemanagerserviceService)
+   {
+    console.log("inside constructor");
+   }
 
    ngOnInit(): void {
-
+    console.log("inside init");
     this.GetFileList();
+    this.GetContainerList();
+  }
 
-    var obj = this.filelisttemp;
-    
-    //console.log(this.FileList);
+  //console.log(this.filelisttemp);
 
-   }
-   constructor(private Service: FilemanagerserviceService)
-   {
-      
-   }
+  ngAfterViewInit() {
+    console.log("inside after view init");
+    //console.log(this.filelisttemp);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+   
    onCellClick(filename:string)
    {
-
     console.log(filename);
-
     this.DownloadFile(filename);    
 
     // let isdownloadfile = this.DownloadFile(filename);    
@@ -49,6 +68,7 @@ export class FileManagerComponent {
    DownloadFile(filename:string):boolean {
     var isdownloadsuccess: boolean = false;
     console.log("inside DownloadFile");
+
     this.Service.DownloadFile(filename).subscribe(
        (response: any) => {
        
@@ -63,64 +83,66 @@ export class FileManagerComponent {
         a.click();
         isdownloadsuccess = true;
       });
-      
-      // error: (e)=>{
-      //   Object.keys(e).forEach(element => {
-      //     console.log(element +":" + e[element]);
-      //    });
-        
-      //   console.log("error " + e.error[Object.keys(e.error)[0]]);
-      //   // console.log("e.message " + e.message);
-      
-      // }, 
-      
-      // complete: () => { console.log("file downloaded");}
-    // });
-
-
-
-    
+     
       return isdownloadsuccess;
    }
 
-   GetFileList(): void {
-    this.Service.GetFileList().subscribe({
-      next: (response: any) => {
-      this.filelisttemp = response;      //this.FileList.push()
-      console.log(this.filelisttemp);
-    },
-    
-    error: (e)=>{console.log("error " + e);}, 
-    
-    complete: () => { 
+    GetFileList(): void {
+     this.Service.GetFileList().subscribe({
+      next: (response: any) => {        
+      this.dataSource.data = response;    //this.FileList.push()       
+    },    
+    error: (e)=>{console.log("error " + e);},     
+    complete: () => {
+      console.log("inside complete");      
+      //console.log(this.filelisttemp);
+      //this.dataSource.data = this.filelisttemp;
     //   this.filelisttemp.forEach((element:any) => {
-    //   console.log("first");
     //   if(this.FileList.length>0 ) return;
     //   var obj = { name:element.name, sizeinkb:element.size, uploadedby:"test"};
     //   this.FileList.push(obj);
     //   console.log(this.FileList);
     // } );
   }});
+}
 
+  GetContainerList(): void {
+    this.Service.GetContainers().subscribe({
+     next: (response: any) => {        
+     this.containerList = response;    //this.FileList.push()       
+   },    
+   error: (e)=>{console.log("error " + e);},     
+   complete: () => {
+     console.log("inside complete");      
+     console.log(this.containerList);
+    }});
+  }
 
-    //this.Service.GetFileList().pipe(map((response: Response) => response.json().map(res => new FileDataToDisplay{}))
+  containerChange() :void
+  {
+    console.log("inside container change");
+    this.Service.GetFileListForContainer(this.selectedContainer).subscribe({
+      next: (response: any) => {        
+      this.dataSource.data = response;    //this.FileList.push()       
+    },    
+    error: (e)=>{console.log("error " + e);},     
+    complete: () => {
+      console.log("inside complete");      
+      
+  }});
+   
+  }
 
-
-  // this.FileList=[
-  //     {
-  //       name: "aadhaar.jpg",
-  //       sizeinkb: 40,
-  //       uploadedby:"Anand"       
-  //     },
-  //     {
-  //       name: "pan.jpg",
-  //       sizeinkb: 20,
-  //       uploadedby:"Jeeni"  
-  //     }
-  //  ];
-
-  //  console.log(this.FileList);
-         
+  SortChange(e:any) {
+    // This example uses English messages. If your application supports
+    // multiple language, you would internationalize these strings.
+    // Furthermore, you can customize the message to add additional
+    // details about the values being sorted.
+    if (e.direction) {
+      
+    } else {
+     
+    }
   }
 
 }

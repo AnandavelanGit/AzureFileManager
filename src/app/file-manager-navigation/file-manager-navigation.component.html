@@ -1,0 +1,39 @@
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-lg-6 ">
+            <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link " id="nav-fileList-tab" aria-controls="nav-fileList"
+                        (click)="tabclick('FileList')" aria-selected="true">File List</a>
+                    <a class="nav-item nav-link" id="nav-uploadFile-tab" aria-controls="nav-uploadFile"
+                        (click)="tabclick('UploadFile')" aria-selected="false">Upload Files</a>
+                </div>
+            </nav>
+        </div>
+        <div class="col-lg-12 nav-tabcontent">
+            <div class="tab-pane fade show active" id="nav-fileList" role="tabpanel" aria-labelledby="nav-fileList-tab"
+                *ngIf="showTab=='FileList'">
+                <div class="row">
+
+                    <app-file-manager></app-file-manager>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 nav-tabcontent">
+            <div class="tab-pane fade show active" id="nav-uploadFile" role="tabpanel"
+                aria-labelledby="nav-uploadFile-tab" *ngIf="showTab=='UploadFile'">
+                <div class="row">
+
+                    <app-file-upload></app-file-upload>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
