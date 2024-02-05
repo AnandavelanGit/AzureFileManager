@@ -9,7 +9,7 @@
   <div class="col-lg-6">
     <mat-form-field>
     <mat-label>Select A Container To Get File List</mat-label>
-    <mat-select [(value)]="selectedContainer" (valueChange)="containerChange()">
+    <mat-select [(value)]="selectedContainer" (valueChange)="containerChange()" (selectionChange)="containerChange()">
       <mat-option *ngFor="let container of containerList " [value]="container">{{container}}</mat-option>
     </mat-select>
   </mat-form-field>

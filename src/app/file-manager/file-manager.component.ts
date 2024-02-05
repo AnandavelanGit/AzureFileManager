@@ -40,15 +40,17 @@ export class FileManagerComponent implements AfterViewInit {
    }
 
    ngOnInit(): void {
-    console.log("inside init");
-    this.GetFileList();
+    console.log("inside init");    
     this.GetContainerList();
+    //this.selectedContainer = 
   }
 
   //console.log(this.filelisttemp);
 
   ngAfterViewInit() {
     console.log("inside after view init");
+   
+    //this.GetFileList();
     //console.log(this.filelisttemp);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -94,7 +96,7 @@ export class FileManagerComponent implements AfterViewInit {
     },    
     error: (e)=>{console.log("error " + e);},     
     complete: () => {
-      console.log("inside complete");      
+      console.log("inside complete GetFilelist");      
       //console.log(this.filelisttemp);
       //this.dataSource.data = this.filelisttemp;
     //   this.filelisttemp.forEach((element:any) => {
@@ -107,14 +109,17 @@ export class FileManagerComponent implements AfterViewInit {
 }
 
   GetContainerList(): void {
+    console.log("inside GetContainerList");
     this.Service.GetContainers().subscribe({
      next: (response: any) => {        
      this.containerList = response;    //this.FileList.push()       
    },    
    error: (e)=>{console.log("error " + e);},     
    complete: () => {
-     console.log("inside complete");      
+     console.log("inside complete GetContainerList");      
      console.log(this.containerList);
+     this.selectedContainer = this.containerList[0];
+     this.containerChange();
     }});
   }
 
@@ -127,7 +132,7 @@ export class FileManagerComponent implements AfterViewInit {
     },    
     error: (e)=>{console.log("error " + e);},     
     complete: () => {
-      console.log("inside complete");      
+      console.log("inside complete containerchange");      
       
   }});
    
