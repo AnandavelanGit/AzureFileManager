@@ -31,10 +31,14 @@ export class MsalAuthenticationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log("inside init of msal component");
-    
+   // alert("inside init of msal component");
+   console.log(this.isMsalAccountExists());
+
     if (!this.isMsalAccountExists()) {
+      
       this.openLoginPopup();
     } else {
+       this.router.navigate(['/FileManagerRoot']);
      // this.appInitService.routeToLoggedUrl();
     }
   }
@@ -65,6 +69,10 @@ export class MsalAuthenticationComponent implements OnInit, OnDestroy {
   }
 
   private navigateToHome(response: AuthenticationResult): void {
+
+    console.log("inside navigate to Home");
+    console.log(response);
+    this.router.navigate(['/FileManagerRoot']);
     // this.appInitService.isSuccessfulLoginTriggered.emit();
     // this.msalService.instance.setActiveAccount(response.account);
     // this.appInitService.callLoginLevelOperations(() => {
@@ -81,18 +89,19 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
 
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
+   protectedResourceMap.set(environment.apiUrl, [environment.expose]);
   protectedResourceMap.set(environment.graphApi, ['user.read']);
-  protectedResourceMap.set(environment.apiUrl, [environment.expose]);
-
+// console.log("inside MsalInterceptorConfiguration ");
+// console.log(protectedResourceMap);
   return {
-    interactionType: InteractionType.Redirect,
+    interactionType: InteractionType.Popup,
     protectedResourceMap
   };
 }
 
 export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
-    interactionType: InteractionType.Redirect,
+    interactionType: InteractionType.Popup,
     authRequest: {
       scopes: ['user.read']
     }
