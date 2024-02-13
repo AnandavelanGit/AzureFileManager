@@ -19,6 +19,10 @@ import { RouteReuseStrategy } from '@angular/router';
 import { MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MSAL_GUARD_CONFIG,
    MsalService, MsalGuard, MsalBroadcastService, MsalInterceptor,
     MsalRedirectComponent } from '@azure/msal-angular';
+import { FileManagerInterceptor } from './file-manager-interceptor.interceptor';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HeaderComponent } from './header/header.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -27,7 +31,8 @@ import { MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MSAL_GUARD_CONFIG,
     FileManagerComponent,
     FileUploadComponent,
     FileManagerNavigationComponent,
-    MsalAuthenticationComponent
+    MsalAuthenticationComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +44,8 @@ import { MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MSAL_GUARD_CONFIG,
     MatPaginatorModule,
     MatSortModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
     HttpClientModule,
     NgbModule  
   ],
@@ -64,7 +71,12 @@ import { MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MSAL_GUARD_CONFIG,
     useClass: MsalInterceptor,
     multi: true
   },
-  MsalService, MsalGuard, MsalBroadcastService
+  MsalService, MsalGuard, MsalBroadcastService,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: FileManagerInterceptor,
+    multi: true
+  },
   // {
   //   provide: HTTP_INTERCEPTORS,
   //   useClass: HttpServiceInterceptor,

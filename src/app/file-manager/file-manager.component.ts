@@ -36,7 +36,7 @@ export class FileManagerComponent implements AfterViewInit {
 
   constructor(private Service: FilemanagerserviceService)
    {
-    console.log("inside constructor");
+    console.log("inside constructor file-manager");
    }
 
    ngOnInit(): void {

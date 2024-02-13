@@ -1,9 +1,15 @@
-
-
 <div class="container">
+  <mat-tab-group animationDuration="500ms">
+    <!-- #enddocregion slow-animation-duration -->
+    <mat-tab label="File List">
+      <app-file-manager></app-file-manager>
+    </mat-tab>
+    <mat-tab label="Upload Files">
+      <app-file-upload></app-file-upload>
+    </mat-tab>
+  </mat-tab-group>
 
-
-    <div class="row">
+  <!-- <div class="row">
         <div class="col-lg-6 ">
             <nav>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -35,5 +41,5 @@
         </div>
 
 
-    </div>
+    </div> -->
 </div>

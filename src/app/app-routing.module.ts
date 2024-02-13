@@ -7,6 +7,7 @@ import { MsalAuthenticationComponent } from './msal-authentication/msal-authenti
 
 
 const routes: Routes = [
+  {path: '  ', component: FileManagerNavigationComponent},
     {path: 'FileManagerRoot', component: FileManagerNavigationComponent},
     {
       path: 'msal-authentication',
