@@ -8,7 +8,7 @@ import {
 } from '@azure/msal-browser';
 import { MsalInterceptorConfiguration, MsalGuardConfiguration, MsalService, MSAL_GUARD_CONFIG } 
 from '@azure/msal-angular';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 
 
@@ -29,7 +29,7 @@ export class MsalAuthenticationComponent implements OnInit, OnDestroy {
    // private appInitService: AppInitService
   ) { }
 
-  ngOnInit(): void {
+   ngOnInit():void{
     console.log("inside init of msal component");
    // alert("inside init of msal component");
    console.log(this.isMsalAccountExists());
@@ -47,24 +47,22 @@ export class MsalAuthenticationComponent implements OnInit, OnDestroy {
     return this.msalService?.instance?.getAllAccounts()?.length > 0;
   }
 
-  private openLoginPopup(): void {
+  private  openLoginPopup(){
     console.log("inside openLoginPopup");
     if (this.msalGuardConfig.authRequest) {
       console.log("just befor popup" + this.msalGuardConfig.authRequest );
-
-      this.msalSubscriptions.add(
-        this.msalService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)
-          .subscribe((response: AuthenticationResult) => {
+      //var loginresponse:Observable<AuthenticationResult>;
+     // this.msalSubscriptions.add(
+      this.msalService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)
+     .subscribe((response: AuthenticationResult) => {
             this.navigateToHome(response);
           })
-      );
     } else {
-      this.msalSubscriptions.add(
-        this.msalService.loginPopup()
-          .subscribe((response: AuthenticationResult) => {
-            this.navigateToHome(response);
-          })
-      );
+       this.msalService.loginPopup()
+        .subscribe((response: AuthenticationResult) => {
+          this.navigateToHome(response);
+        })
+     // );
     }
   }
 

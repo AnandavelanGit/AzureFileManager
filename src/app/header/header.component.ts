@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('inside app comp init');
+    console.log('inside header comp init');
     this.Service.GetEmployeeProfile().subscribe((profile: any) => {
       this.employeeName = profile.displayName;
       console.log(profile);

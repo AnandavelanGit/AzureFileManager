@@ -54,10 +54,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     provide: MSAL_INSTANCE,
     useFactory: MSALInstanceFactory
   },
-  // {
-  //   provide: RouteReuseStrategy,
-  //   useClass: CustomRouteReuseStrategyService
-  // },
   {
     provide: MSAL_INTERCEPTOR_CONFIG,
     useFactory: MSALInterceptorConfigFactory
