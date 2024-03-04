@@ -6,9 +6,9 @@ import {
 } from '@azure/msal-angular';
 import { AuthenticationResult, InteractionStatus, InteractionType, PopupRequest, RedirectRequest } from '@azure/msal-browser';
 import { Subject, Subscription, delay, filter, takeUntil } from 'rxjs';
-import { SpinnerserviceService } from './spinnerservice.service';
+import { SpinnerserviceService } from './Services/spinnerservice.service';
 import { ProgressSpinnerMode, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FilemanagerserviceService } from './filemanagerservice.service';
+import { FilemanagerserviceService } from './Services/filemanagerservice.service';
 
 @Component({
   selector: 'app-root',
@@ -41,22 +41,22 @@ export class AppComponent {
   ngOnInit(): void {
     console.log("inside app comp init");
 
-    //this.listenToLoading();
-    this.isApplicationLoggedIn = this.isMsalAccountExists();
-    //this.appInitService.isMsalTriggeredFromBrowser = false;
-    if (!this.isApplicationLoggedIn) {
-      this.updateLoggedURLViaBrowser();
-    }
-    else {
-      console.log("inside app comp after confirming login done");
-      this.router.navigate(['/FileManagerRoot']);
-      //   this.Service.GetEmployeeProfile().subscribe((profile:any)=>
-      //   {
-      //     this.employeeName = profile.displayName;
-      //   console.log(profile);
+    // //this.listenToLoading();
+    // this.isApplicationLoggedIn = this.isMsalAccountExists();
+    // //this.appInitService.isMsalTriggeredFromBrowser = false;
+    // if (!this.isApplicationLoggedIn) {
+    this.updateLoggedURLViaBrowser();
+    // }
+    // else {
+    // console.log("inside app comp after confirming login done");
+    // this.router.navigate(['/FileManagerRoot']);
+    //   this.Service.GetEmployeeProfile().subscribe((profile:any)=>
+    //   {
+    //     this.employeeName = profile.displayName;
+    //   console.log(profile);
 
-      // });
-    }
+    // });
+    //}
   }
 
 
@@ -74,25 +74,38 @@ export class AppComponent {
 
     console.log("inside LoggedURLViaBrowser");
 
-    const inAppSubscription = new Subscription();
-    //console.lo
-    inAppSubscription.add(this.router.events.subscribe((evt: any) => {
-      console.log(evt);
-      if (evt instanceof NavigationStart) {
-        if (evt && evt.url) {
-          if (evt.url !== '/' && evt.url !== '/msal-authentication') {
-            //this.appInitService.loggedURLViaBrowser = evt.url;
-            // this.router.navigate(['/FileManagerRoot']);
-            console.log("inside updateLoggedURLViaBrowser ");
+    if (!this.isMsalAccountExists()) {
+      console.log("inside msal account condition");
+      this.router.navigate(['/msal-authentication']);
+    }
+    else {
+      const inAppSubscription = new Subscription();
+      //console.lo
+      inAppSubscription.add(this.router.events.subscribe((evt: any) => {
+        console.log(evt);
+        console.log("inside updateLoggedURLViaBrowser ");
+        if (evt instanceof NavigationStart) {
+          if (evt && evt.url) {
             console.log(evt.url);
-          }
-          if (evt.url !== '/msal-authentication') {
-            this.router.navigate(['/msal-authentication']);
+            if (evt.url == '/') {
+              this.Service.loggedURLViaBrowser = evt.url;
+
+              // this.router.navigate(['/SecretQuestion']);
+              //console.log(['/SecretQuestion']);
+
+              //this.router.navigate(['/SecretQuestion']);
+            }
+
+            // else if (evt.url !== '/msal-authentication') {
+           // this.router.navigate([evt.url]);
+            // }
+            // }
+            //   }
           }
         }
-      }
-      inAppSubscription.unsubscribe();
-    }));
+        inAppSubscription.unsubscribe();
+      }));
+    }
   }
 
   private isMsalAccountExists(): boolean {

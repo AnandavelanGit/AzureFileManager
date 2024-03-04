@@ -21,3 +21,10 @@ export interface IFileDataAzure {
   uploadedBy: string;
   size: number; 
 }
+
+
+export class qaclass
+  {
+    public question: string;
+    public answer: string;
+  }

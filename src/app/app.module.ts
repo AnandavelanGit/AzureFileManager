@@ -19,10 +19,13 @@ import { RouteReuseStrategy } from '@angular/router';
 import { MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MSAL_GUARD_CONFIG,
    MsalService, MsalGuard, MsalBroadcastService, MsalInterceptor,
     MsalRedirectComponent } from '@azure/msal-angular';
-import { FileManagerInterceptor } from './file-manager-interceptor.interceptor';
+import { FileManagerInterceptor } from './Interceptors/file-manager-interceptor.interceptor';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HeaderComponent } from './header/header.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { SecretQuestionComponent } from './secret-question/secret-question.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SecretQuestion2Component } from './secret-question2/secret-question2.component';
 
 
 @NgModule({
@@ -32,7 +35,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     FileUploadComponent,
     FileManagerNavigationComponent,
     MsalAuthenticationComponent,
-    HeaderComponent
+    HeaderComponent,
+    SecretQuestionComponent,
+    SecretQuestion2Component
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatProgressSpinnerModule,
     MatTabsModule,
     HttpClientModule,
-    NgbModule  
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule  
   ],
   providers: [
     {

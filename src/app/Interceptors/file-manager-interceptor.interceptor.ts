@@ -7,8 +7,8 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import { Observable, catchError, finalize, map, throwError } from 'rxjs';
-import { SpinnerserviceService } from './spinnerservice.service';
-import { FilemanagerserviceService } from './filemanagerservice.service';
+import { SpinnerserviceService } from '../Services/spinnerservice.service';
+import { FilemanagerserviceService } from '../Services/filemanagerservice.service';
 
 @Injectable()
 export class FileManagerInterceptor implements HttpInterceptor {
@@ -16,12 +16,17 @@ export class FileManagerInterceptor implements HttpInterceptor {
   
   constructor(private _loading: SpinnerserviceService, 
     private Service: FilemanagerserviceService
-    ) {}
+    ) {
+
+      console.log("servicecount"+ this.incRequestCount);
+    }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.incRequestCount += 1;
     // this._loading.setLoading(true, request.url);
     this.Service.applyLoaderOnApiCall(this.incRequestCount > 0);
+    
+    console.log("servicecount"+ this.incRequestCount);
     
     return next.handle(request)
       .pipe(

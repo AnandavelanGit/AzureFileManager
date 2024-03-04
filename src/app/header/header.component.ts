@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FilemanagerserviceService } from '../filemanagerservice.service';
+import { FilemanagerserviceService } from '../Services/filemanagerservice.service';
 import { MsalService } from '@azure/msal-angular';
 
 @Component({

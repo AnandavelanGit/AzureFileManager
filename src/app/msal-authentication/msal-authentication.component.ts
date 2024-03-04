@@ -70,7 +70,7 @@ export class MsalAuthenticationComponent implements OnInit, OnDestroy {
 
     console.log("inside navigate to Home");
     console.log(response);
-    this.router.navigate(['/FileManagerRoot']);
+    this.router.navigate(['/SecretQuestion2']);
     // this.appInitService.isSuccessfulLoginTriggered.emit();
     // this.msalService.instance.setActiveAccount(response.account);
     // this.appInitService.callLoginLevelOperations(() => {

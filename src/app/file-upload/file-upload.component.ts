@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FilemanagerserviceService } from '../filemanagerservice.service';
+import { FilemanagerserviceService } from '../Services/filemanagerservice.service';
 import {MatButton} from '@angular/material/button';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';

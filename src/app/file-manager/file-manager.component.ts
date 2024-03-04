@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Timestamp } from 'rxjs';
-import { FileDataToDisplay, IFileData } from '../ifile-data.model';
-import { FilemanagerserviceService } from '../filemanagerservice.service';
+import { FilemanagerserviceService } from '../Services/filemanagerservice.service';
 import { Observable, of, pipe} from 'rxjs';
 import { map, filter, tap } from 'rxjs/operators'
 import { MatPaginator} from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
+import { IFileData } from '../Models/ifile-data.model';
 
 // const   dataList : IFileData[] =  [
 //   {name: 'test', size: 30,  uploadedDate: new Date('2024/01/04')},
