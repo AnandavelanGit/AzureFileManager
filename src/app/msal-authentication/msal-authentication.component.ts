@@ -9,8 +9,7 @@ import {
 import { MsalInterceptorConfiguration, MsalGuardConfiguration, MsalService, MSAL_GUARD_CONFIG } 
 from '@azure/msal-angular';
 import { Observable, Subscription } from 'rxjs';
-
-
+import { FilemanagerserviceService } from '../Services/filemanagerservice.service';
 
 
 @Component({
@@ -26,31 +25,30 @@ export class MsalAuthenticationComponent implements OnInit, OnDestroy {
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
     private router: Router,
     private msalService: MsalService,
+    private service: FilemanagerserviceService
    // private appInitService: AppInitService
   ) { }
 
    ngOnInit():void{
-    console.log("inside init of msal component");
-   // alert("inside init of msal component");
-   console.log(this.isMsalAccountExists());
 
-    if (!this.isMsalAccountExists()) {
-      
+    if (!this.isMsalAccountExists()) {      
       this.openLoginPopup();
     } else {
-       this.router.navigate(['/FileManagerRoot']);
-     // this.appInitService.routeToLoggedUrl();
+      console.log("before navigate");
+      // sessionStorage.setItem('secretAnswers', 'done');
+       this.router.navigate(this.service.loggedURLViaBrowser.split('/'));     
     }
   }
 
   private isMsalAccountExists(): boolean {
+    
     return this.msalService?.instance?.getAllAccounts()?.length > 0;
   }
 
   private  openLoginPopup(){
     console.log("inside openLoginPopup");
     if (this.msalGuardConfig.authRequest) {
-      console.log("just befor popup" + this.msalGuardConfig.authRequest );
+      console.log("just before popup" + this.msalGuardConfig.authRequest );
       //var loginresponse:Observable<AuthenticationResult>;
      // this.msalSubscriptions.add(
       this.msalService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)

@@ -33,79 +33,57 @@ export class AppComponent {
 
 
   ) {
-
     console.log("inside constructor App component");
   }
 
 
   ngOnInit(): void {
     console.log("inside app comp init");
-
-    // //this.listenToLoading();
-    // this.isApplicationLoggedIn = this.isMsalAccountExists();
-    // //this.appInitService.isMsalTriggeredFromBrowser = false;
-    // if (!this.isApplicationLoggedIn) {
     this.updateLoggedURLViaBrowser();
-    // }
-    // else {
-    // console.log("inside app comp after confirming login done");
-    // this.router.navigate(['/FileManagerRoot']);
-    //   this.Service.GetEmployeeProfile().subscribe((profile:any)=>
-    //   {
-    //     this.employeeName = profile.displayName;
-    //   console.log(profile);
 
-    // });
-    //}
   }
 
-
-  // private listenToLoading(): void {
-
-  //   console.log("inside listen To loading");
-  //   this.spinnerService.loadingSub
-  //     .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
-  //     .subscribe((loading) => {
-  //       this.loading = loading;
-  //     });
-  // }
 
   private updateLoggedURLViaBrowser(): void {
 
     console.log("inside LoggedURLViaBrowser");
 
-    if (!this.isMsalAccountExists()) {
-      console.log("inside msal account condition");
-      this.router.navigate(['/msal-authentication']);
-    }
-    else {
-      const inAppSubscription = new Subscription();
-      //console.lo
-      inAppSubscription.add(this.router.events.subscribe((evt: any) => {
-        console.log(evt);
-        console.log("inside updateLoggedURLViaBrowser ");
-        if (evt instanceof NavigationStart) {
-          if (evt && evt.url) {
-            console.log(evt.url);
-            if (evt.url == '/') {
-              this.Service.loggedURLViaBrowser = evt.url;
+    const inAppSubscription = new Subscription();
 
-              // this.router.navigate(['/SecretQuestion']);
-              //console.log(['/SecretQuestion']);
-
-              //this.router.navigate(['/SecretQuestion']);
+    inAppSubscription.add(this.router.events.subscribe((evt: any) => {
+      console.log(evt);
+      console.log("inside updateLoggedURLViaBrowser ");
+      //if (evt instanceof NavigationStart) {
+      if (evt && evt.url) {
+        console.log(evt.url);
+        switch (evt.url) {
+          case '/':
+            {
+              this.router.navigate(['/msal-authentication']);
+              break;
             }
+          case '/msal-authentication':
+            {
+              break;
+            }
+            default:
+              {
+                this.Service.loggedURLViaBrowser = evt.url;
+              this.router.navigate(['/msal-authentication']);
+              }
 
-            // else if (evt.url !== '/msal-authentication') {
-           // this.router.navigate([evt.url]);
-            // }
-            // }
-            //   }
-          }
         }
-        inAppSubscription.unsubscribe();
-      }));
-    }
+        // if (evt.url != '/' && evt.url !== '/msal-authentication') {
+        //   this.Service.loggedURLViaBrowser = evt.url;
+        //   if (evt.url !== '/msal-authentication') {
+        //     this.router.navigate(['/msal-authentication']);
+        //   }
+        // }
+      }
+      // }
+      inAppSubscription.unsubscribe();
+    }));
+
   }
 
   private isMsalAccountExists(): boolean {

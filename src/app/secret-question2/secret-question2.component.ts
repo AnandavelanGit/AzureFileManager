@@ -16,7 +16,8 @@ export class SecretQuestion2Component implements OnInit {
   iswronganswer: boolean = false;
   qaForm: FormGroup;
 
-  constructor(private Service: FilemanagerserviceService, private formBuilder: FormBuilder, private router: Router
+  constructor(private Service: FilemanagerserviceService, private formBuilder: FormBuilder, 
+    private router: Router, private service: FilemanagerserviceService
   ) {
     console.log("inside SecretQues2 constructor");
 
@@ -35,9 +36,8 @@ export class SecretQuestion2Component implements OnInit {
 
   ngOnInit(): void {
     console.log("inside SecretQues2 oninit");
+    console.log(this.service.loggedURLViaBrowser.split('/'));
     this.getQuestions();
-
-
   }
 
   onSubmit() {
@@ -56,12 +56,14 @@ export class SecretQuestion2Component implements OnInit {
       if (isAllAnswersCorrect)
       {
         sessionStorage.setItem('secretAnswers', 'done');
-        this.router.navigate(['/FileManagerRoot']);
+        
+        this.router.navigate(this.service.loggedURLViaBrowser.split('/'));     
+
+        //this.router.navigate(['/FileManagerRoot']);
       }
       else
         this.iswronganswer = !isAllAnswersCorrect;
       
-      //this.router.navigate(['/FileManagerRoot']);
     });
 
   }
