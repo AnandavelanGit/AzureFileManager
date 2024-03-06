@@ -12,7 +12,7 @@ import { AuthorizeGuard } from 'src/AuthGuard/authorize.guard';
 
 
 const routes: Routes = [
-  { path: '', component: FileManagerNavigationComponent},
+  { path: '', component: FileManagerNavigationComponent, canActivate: [AuthorizeGuard]},
   {path: 'SecretQuestion2', component: SecretQuestion2Component},
   {path: 'SecretQuestion', component: SecretQuestionComponent},
   { path: 'FileManagerRoot', component: FileManagerNavigationComponent, canActivate: [AuthorizeGuard]  },

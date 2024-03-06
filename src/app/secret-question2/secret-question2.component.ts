@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FilemanagerserviceService } from '../Services/filemanagerservice.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { qaclass } from '../Models/ifile-data.model';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 
 @Component({
   selector: 'app-secret-question2',
@@ -18,6 +18,7 @@ export class SecretQuestion2Component implements OnInit {
 
   constructor(private Service: FilemanagerserviceService, private formBuilder: FormBuilder, 
     private router: Router, private service: FilemanagerserviceService
+    //, private route?: ActivatedRouteSnapshot,
   ) {
     console.log("inside SecretQues2 constructor");
 
@@ -36,6 +37,12 @@ export class SecretQuestion2Component implements OnInit {
 
   ngOnInit(): void {
     console.log("inside SecretQues2 oninit");
+    if(sessionStorage.getItem('secretAnswers') == 'done')
+    {
+      console.log("inside re routing to original url");
+      //if (this.route) this.router.navigate(this.route.url); else 
+      this.router.navigate(['FileManagerRoot']);
+    }
     console.log(this.service.loggedURLViaBrowser.split('/'));
     this.getQuestions();
   }
