@@ -17,6 +17,14 @@
   <p style="display: block; font-weight: bold; text-transform: uppercase;"> {{selectedContainer}} </p>
 </div>
 <br/>
+
+<div class="row"> 
+  <div class="col-lg-6">  
+  Search: <input type="text" [(ngModel)]="searchTerm" (keyup)="onKeyUp($event)"  placeholder="Type min 3 characters ">
+  
+</div>
+</div>
+<br/>
 <div class="row">
   <div class="col-lg-12">    
         <table mat-table [dataSource]="dataSource"  (matSortChange)="SortChange($event)" class="mat-elevation-z6" matSort>

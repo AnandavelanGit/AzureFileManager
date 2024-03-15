@@ -1,5 +1,5 @@
 export const environment = {
-    defaultComponent:"SecretQuestionComponent",
+    defaultComponent:"SecretQuestion2Component",
     production: false,
     apiUrl: 'https://localhost:5001/',
     //apiUrl: 'https://filemanageapi.azurewebsites.net/',

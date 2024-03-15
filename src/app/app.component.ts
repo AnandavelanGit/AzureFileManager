@@ -53,7 +53,6 @@ export class AppComponent {
     inAppSubscription.add(this.router.events.subscribe((evt: any) => {
       console.log(evt);
       console.log("inside updateLoggedURLViaBrowser ");
-      //if (evt instanceof NavigationStart) {
       if (evt && evt.url) {
         console.log(evt.url);
         switch (evt.url) {
@@ -66,21 +65,15 @@ export class AppComponent {
             {
               break;
             }
-            default:
-              {
-                this.Service.loggedURLViaBrowser = evt.url;
+          default:
+            {
+              this.Service.loggedURLViaBrowser = evt.url;
               this.router.navigate(['/msal-authentication']);
-              }
+            }
 
         }
-        // if (evt.url != '/' && evt.url !== '/msal-authentication') {
-        //   this.Service.loggedURLViaBrowser = evt.url;
-        //   if (evt.url !== '/msal-authentication') {
-        //     this.router.navigate(['/msal-authentication']);
-        //   }
-        // }
+
       }
-      // }
       inAppSubscription.unsubscribe();
     }));
 
@@ -90,10 +83,7 @@ export class AppComponent {
     return this.msalService?.instance?.getAllAccounts()?.length > 0;
   }
 
-  // ngOnDestroy(): void {
-  //   this._destroying$.next(undefined);
-  //   this._destroying$.complete();
-  // }
+
 
   setLoginDisplay() {
     this.loginDisplay = this.msalService.instance.getAllAccounts().length > 0;

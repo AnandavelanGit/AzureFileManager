@@ -85,7 +85,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
 
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
-   protectedResourceMap.set(environment.apiUrl, [environment.expose]);
+  protectedResourceMap.set(environment.apiUrl, [environment.expose]);
   protectedResourceMap.set(environment.graphApi, ['user.read']);
 // console.log("inside MsalInterceptorConfiguration ");
 // console.log(protectedResourceMap);

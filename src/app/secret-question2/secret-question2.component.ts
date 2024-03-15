@@ -63,6 +63,7 @@ export class SecretQuestion2Component implements OnInit {
       if (isAllAnswersCorrect)
       {
         sessionStorage.setItem('secretAnswers', 'done');
+        console.log(this.service.loggedURLViaBrowser);
         
         this.router.navigate(this.service.loggedURLViaBrowser.split('/'));     
 
