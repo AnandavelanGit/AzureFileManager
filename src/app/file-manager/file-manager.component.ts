@@ -60,7 +60,14 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
     console.log("inside init");
 
     this.GetContainerList();
-    //this.selectedContainer = 
+
+    this.Service.fileupdated.subscribe(container => {
+      if(this.selectedContainer == container){
+        this.containerChange();
+      }
+      
+    });
+    //this.selectedContainer = {}
   }
 
   //console.log(this.filelisttemp);

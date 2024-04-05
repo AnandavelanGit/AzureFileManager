@@ -49,7 +49,8 @@ export class FileUploadComponent {
     if (this.file) {
       this.filename = this.file.name;
       this.Service.UploadFile(this.file, this.selectedContainer).subscribe(resp => {
-        alert("Uploaded")
+        alert("Uploaded");
+        this.Service.fileupdated.emit(this.selectedContainer);
       })
     } else {
       alert("Please select a file first")

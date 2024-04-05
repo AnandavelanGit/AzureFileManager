@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { EventEmitter, Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -10,6 +10,9 @@ import { qaclass } from '../Models/ifile-data.model';
 export class FilemanagerserviceService {
   apiUrl: string = '';
   loggedURLViaBrowser: string ='';
+  fileupdated: EventEmitter<string> = new EventEmitter<string>();
+
+
 
   constructor(private http: HttpClient) {
     this.apiUrl = environment.apiUrl;
