@@ -1,1 +1,138 @@
 /* You can add global styles to this file, and also import other style files */
+.file-input {
+    display: none;
+  }
+
+  .loading-container {
+    /* display:flex; */
+    position:fixed;
+    top: 100px;
+    left: 100px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 2;
+  }
+  
+  .site-container {
+    font-size: 14px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    height: 100vh;
+    background: #f1f1f1;
+    overflow: hidden;
+    
+    
+    .site-header {
+      height: 50px;
+    }
+  
+    .site-content {
+      height: calc(100vh - 31px);
+      padding: 0 15px;
+      overflow: auto;
+    }
+  }
+
+  .navigation {
+    z-index: 9;
+  }
+  
+  .headroom {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    transition: all .4s ease-in-out;
+    padding: 0px 12px;
+    background-color: #2B56AE;
+    /* box-shadow: 0px 3px 6px #00000029; */
+    color: #f1f1f1;
+
+  }
+  /* showing the loader when api call is progressing */
+
+/* preloader */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 142px;
+  height: 40px;
+  margin: -20px 0 0 -71px;
+  background: white;
+}
+
+.preloader .loader .dot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 12px;
+  left: 15px;
+  background: #ff6f00;
+  border-radius: 50%;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  -webkit-animation: dot 2.8s infinite;
+  animation: dot 2.8s infinite;
+}
+
+.preloader .loader .dots {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  margin-top: 12px;
+  margin-left: 31px;
+  -webkit-animation: dots 2.8s infinite;
+  animation: dots 2.8s infinite;
+}
+
+.preloader .loader .dots span {
+  display: block;
+  float: left;
+  width: 16px;
+  height: 16px;
+  margin-left: 16px;
+  background: #ff6f00;
+  border-radius: 50%;
+}
+
+@-webkit-keyframes dot {
+  50% {
+    -webkit-transform: translateX(96px);
+    transform: translateX(96px);
+  }
+}
+
+@keyframes dot {
+  50% {
+    -webkit-transform: translateX(96px);
+    transform: translateX(96px);
+  }
+}
+
+@-webkit-keyframes dots {
+  50% {
+    -webkit-transform: translateX(-31px);
+    transform: translateX(-31px);
+  }
+}
+
+@keyframes dots {
+  50% {
+    -webkit-transform: translateX(-31px);
+    transform: translateX(-31px);
+  }
+}

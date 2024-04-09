@@ -1,10 +1,9 @@
 export interface IFileData {
 
     name: string;
-    uploadeddate:Date
-  uploadedby: string;
-  size: number;
- // uploadeddate: Date;
+    size: number;
+    uploadedDate:Date;
+ 
 }
 export class FileDataToDisplay {
 
@@ -22,3 +21,10 @@ export interface IFileDataAzure {
   uploadedBy: string;
   size: number; 
 }
+
+
+export class qaclass
+  {
+    public question: string;
+    public answer: string;
+  }

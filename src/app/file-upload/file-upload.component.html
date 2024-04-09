@@ -1,0 +1,49 @@
+<div class="container">
+    <br/>
+    <br/>
+    <div class="row">
+      <div class="col-lg-6">
+        <mat-form-field>
+        <mat-label>Select A Container To Get File List</mat-label>
+        <mat-select [(value)]="selectedContainer">
+          <mat-option *ngFor="let container of containerList " [value]="container">{{container}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+      <p style="display: block; font-weight: bold; text-transform: uppercase;"> {{selectedContainer}} </p>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="mb-3 file-input">
+                <!-- <label for="formFile" class="form-label">Upload File to Azure Container</label> -->
+                <input (change)="this.onFilechange($event)" class="form-control" type="file" id="formFile" #fileUpload>
+                <!-- <button (click)="this.upload()" type="button" class="btn btn-primary mt-3">Upload</button> -->
+            </div>
+        </div>
+    </div>
+    <br/>
+    
+    <div class="row">
+        <div class="col-lg-4">
+           Click here to Select and upload file
+            <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                <mat-icon>attach_file</mat-icon>
+            </button>
+        </div>
+        
+    </div>
+    <div class="row">
+    <div class="col-lg-4">
+        {{ filename || "No file selected for upload yet."}}
+
+    </div>
+</div>
+    <!-- <div class="row mt-5">
+        <div class="col-md-4">
+            <a [routerLink]="['/FileList']">Get Files Page</a>
+        </div>
+    </div> -->
+
+
+</div>

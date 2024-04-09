@@ -1,0 +1,57 @@
+.mobile-log {
+    background-color: blue;
+    position: relative;
+    width: 100%;
+}
+
+.unselected-btn {
+    color: white;
+}
+
+.gate-type {
+    font: normal normal 12px/18px Poppins !important;
+    font-weight: 400 !important;
+}
+
+.btn-type-inward,
+.btn-type-outward {
+    width: 145px !important;
+    white-space: nowrap;
+}
+
+.unselected-btn:hover{
+    background-color: transparent !important;
+}
+
+.btn-type-inward:disabled,
+.btn-type-outward:disabled {
+    cursor: not-allowed;
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+}
+
+.create-dgp-selected {   
+    cursor: not-allowed;
+    background-color: #007bff !important;
+    border-color: #007bff !important;  
+}
+
+.btn-type-inward {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.btn-type-outward {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.btn-disable-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: gray;
+    z-index: 10;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
