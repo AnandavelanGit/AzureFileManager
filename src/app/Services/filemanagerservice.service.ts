@@ -16,7 +16,7 @@ export class FilemanagerserviceService {
 
   constructor(private http: HttpClient) {
     this.apiUrl = environment.apiUrl;
-    console.log('hello' + environment.production);
+   // console.log('hello' + environment.production);
   }
 
   GetEmployeeProfile(): Observable<any> {
