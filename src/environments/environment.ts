@@ -1,7 +1,7 @@
 //import { SecretQuestionComponent } from "src/app/secret-question/secret-question.component";
 
 export const environment = {
-    production: false,
+
     defaultComponent:"SecretQuestion2Component",
     //apiUrl: 'https://localhost:5001/'
     apiUrl: 'https://filemanageapi.azurewebsites.net/',
@@ -10,6 +10,7 @@ export const environment = {
     redirectUri: 'https://red-meadow-0d468f610.4.azurestaticapps.net/',
     expose: 'api://db7857f4-4929-4c5e-95cb-5c352f65cf46/user_impersonation',
     graphApi: 'https://graph.microsoft.com/v1.0/me'
+
 
 };
 
