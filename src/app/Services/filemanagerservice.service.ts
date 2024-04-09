@@ -1,5 +1,5 @@
 import { EventEmitter, Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { qaclass } from '../Models/ifile-data.model';
@@ -61,6 +61,24 @@ export class FilemanagerserviceService {
     formParams.append('container', container);
 
     return this.http.post(`${this.apiUrl + 'UploadAFile'}`, formParams);
+  }
+
+  DeleteFile(filename: string, container: string): Observable<any> {
+
+    // const params = new HttpParams({
+    //   fromObject: { 
+    //     filename : filename,
+    //   container : container      
+    //   }
+    //   });
+
+      const params = new HttpParams()
+      .set("filename", filename)
+      .set("container", container);
+    
+      return this.http.delete(`${this.apiUrl +'DeleteFile'}`, {params});
+
+      //this.http.post()
   }
 
   applyLoaderOnApiCall(isLoaderNeedToApply: boolean): void {

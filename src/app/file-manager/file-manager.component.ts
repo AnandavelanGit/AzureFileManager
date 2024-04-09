@@ -28,12 +28,14 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   containerList: any[] = [];
   public searchTerms = new Subject<string>();
   searchTerm: string = '';
+  file : any;
+  filename : string = "";
 
   public selectedContainer: string = "";
   private fileListFiltered: IFileData[] = [];
   private fileListUnFiltered: IFileData[] = [];
 
-  displayedColumns: string[] = ['name', 'size', 'uploadedDate'];
+  displayedColumns: string[] = ['name', 'size', 'uploadedDate','Action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<IFileData>();
@@ -173,6 +175,51 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
 
     }
   }
+
+  onFilechange(event: any) {
+    console.log(event.target.files[0])
+    this.file = event.target.files[0]
+    this.upload();
+  }
+
+  upload() {
+    console.log("inside upload");
+    console.log(this.selectedContainer);
+    if (this.file) {
+      this.filename = this.file.name;
+      this.Service.UploadFile(this.file, this.selectedContainer).subscribe(resp => {
+        alert("Uploaded successfully!!!");
+        this.Service.fileupdated.emit(this.selectedContainer);
+      })
+    } else {
+      alert("Please select a file first");
+    }
+  }
+
+  delRecord(i: any)
+  {
+    var selectedFile = this.dataSource.data[i];
+    console.log(selectedFile.name);
+      this.dataSource.data.splice(i, 1);
+      //this.dataSource._updateChangeSubscription(); // <-- Refresh the datasource
+      this.Service.DeleteFile(selectedFile.name,this.selectedContainer).subscribe({
+        next: (response: any) => {
+          //console.log("Deleted successfully");
+          //this.containerList = response;    //this.FileList.push()       
+        },
+        error: (e) => { console.log("error " + e); },
+        complete: () => {
+          alert("Deleted successfully!!!");
+          this.Service.fileupdated.emit(this.selectedContainer);
+
+        }
+      });
+      //alert("Deleted successfully!!!");
+      
+      
+    
+  }
+
 
 }
 
