@@ -1,5 +1,7 @@
 export interface IFileData {
 
+  container: string;
+
     name: string;
     size: number;
     uploadedDate:Date;
@@ -16,6 +18,9 @@ uploadedby: string,
 }
 
 export interface IFileDataAzure {
+
+  container: string;
+
   name: string;
   uploadedDate: Date;
   uploadedBy: string;
