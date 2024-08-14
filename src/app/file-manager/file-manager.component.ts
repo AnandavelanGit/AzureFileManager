@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Subject, Timestamp } from 'rxjs';
+import { Subject, Timestamp, forkJoin } from 'rxjs';
 import { FilemanagerserviceService } from '../Services/filemanagerservice.service';
 import { Observable, of, pipe } from 'rxjs';
 import { map, filter, tap, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators'
@@ -31,11 +31,14 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   file : any;
   filename : string = "";
 
-  public selectedContainer: string = "";
+  public selectedContainer: string  = "";
+
+  public selectedContainers: string []  = [];
+
   private fileListFiltered: IFileData[] = [];
   private fileListUnFiltered: IFileData[] = [];
 
-  displayedColumns: string[] = ['name', 'size', 'uploadedDate','Action'];
+  displayedColumns: string[] = ['container','name', 'size', 'uploadedDate','Action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<IFileData>();
@@ -64,9 +67,9 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
     this.GetContainerList();
 
     this.Service.fileupdated.subscribe(container => {
-      if(this.selectedContainer == container){
+      //if(this.selectedContainer == container){
         this.containerChange();
-      }
+      //}
       
     });
     //this.selectedContainer = {}
@@ -135,7 +138,8 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
       complete: () => {
         console.log("inside complete GetContainerList");
         console.log(this.containerList);
-        this.selectedContainer = this.containerList[0];
+        this.selectedContainers.push(this.containerList[0]);
+        //this.selectedContainer = this.containerList[0];
         this.containerChange();
       }
     });
@@ -143,17 +147,35 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
 
   containerChange(): void {
     console.log("inside container change");
-    this.Service.GetFileListForContainer(this.selectedContainer).subscribe({
+    //console.log(this.selectedContainers[this.selectedContainers.length-1]);
+    const observables = this.selectedContainers.map(container => this.Service.GetFileListForContainer(container) );
+    forkJoin(observables).subscribe
+    ({
       next: (response: any) => {
-        this.fileListUnFiltered = response;
-        this.dataSource.data = response;    //this.FileList.push()       
+        console.log(response);
+        this.dataSource.data = response.flat();
+        this.fileListUnFiltered =response.flat();
       },
       error: (e) => { console.log("error " + e); },
       complete: () => {
         console.log("inside complete containerchange");
-
       }
     });
+    // this.Service.GetFileListForContainer(this.selectedContainer).subscribe({
+    //   next: (response: any) => {
+    //     console.log(response);
+    //     this.fileListUnFiltered = [...this.fileListUnFiltered, ...response ] 
+    //     //this.fileListUnFiltered(response);
+    //     console.log(this.fileListUnFiltered);
+    //        //this.FileList.push()       
+    //   },
+    //   error: (e) => { console.log("error " + e); },
+    //   complete: () => {
+    //     console.log("inside complete containerchange");
+    //     this.dataSource.data = this.fileListUnFiltered; 
+
+    //   }
+    // });
 
   }
 
@@ -162,7 +184,7 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
 
     console.log(this.fileListUnFiltered);
 
-    this.dataSource.data = this.fileListUnFiltered.filter(item => item.name.toLowerCase().includes(term.toLowerCase()));
+    this.dataSource.data = this.fileListUnFiltered.filter(item => item.name.toLowerCase().includes(term.toLowerCase()) || item.container.toLowerCase().includes(term.toLowerCase()));
 
 
   }
